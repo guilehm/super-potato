@@ -49,8 +49,8 @@ class Patient(models.Model):
 
 class Address(models.Model):
     patient = models.OneToOneField('people.Patient', related_name='address', on_delete=models.CASCADE)
-    postal_code = models.CharField(max_length=10, db_index=True, null=True, blank=True)
-    address = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=10, db_index=True)
+    address = models.CharField(max_length=50, null=True, blank=True)
     number = models.CharField(max_length=10, null=True, blank=True)
     complement = models.CharField(max_length=20, null=True, blank=True)
     district = models.CharField(max_length=20, null=True, blank=True)
