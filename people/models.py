@@ -55,6 +55,7 @@ class Address(models.Model):
     complement = models.CharField(max_length=20, null=True, blank=True)
     district = models.CharField(max_length=20, null=True, blank=True)
     city = models.CharField(max_length=30, null=True, blank=True)
+    state = models.CharField(max_length=2, blank=True, null=True)
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
