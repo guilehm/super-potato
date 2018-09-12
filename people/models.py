@@ -56,7 +56,7 @@ class Patient(People):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
     holder = models.ForeignKey(
         'people.Patient',
-        related_name='patients',
+        related_name='dependents',
         null=True,
         blank=True,
         on_delete=models.SET_NULL
