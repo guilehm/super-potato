@@ -16,9 +16,19 @@ class Entity(models.Model):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     website = models.CharField(max_length=100, unique=True, null=True, blank=True)
     start_date = models.DateField(null=True, blank=True)
+    address = models.ForeignKey(
+        'register.Address',
+        related_name='entities',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Entities'
 
     def __str__(self):
         return self.name
@@ -42,3 +52,20 @@ class HealthPlan(models.Model):
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+
+class Address(models.Model):
+    postal_code = models.CharField(max_length=10, db_index=True)
+    address = models.CharField(max_length=50, null=True, blank=True)
+    number = models.CharField(max_length=10, null=True, blank=True)
+    complement = models.CharField(max_length=20, null=True, blank=True)
+    district = models.CharField(max_length=20, null=True, blank=True)
+    city = models.CharField(max_length=30, null=True, blank=True)
+    state = models.CharField(max_length=2, blank=True, null=True)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_changed = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.address
+

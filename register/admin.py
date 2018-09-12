@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from register.models import Entity, HealthPlan
+from register.models import Entity, HealthPlan, Address
 
 
 @admin.register(HealthPlan)
@@ -15,3 +15,10 @@ class EntityAdmin(admin.ModelAdmin):
     list_display = ('name', 'doc', 'entity', 'website')
     list_filter = ('entity', 'date_added')
     search_fields = ('name', 'doc', 'email', 'phone_number', 'website')
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('address', 'district', 'city', 'state')
+    list_filter = ('city', 'state')
+    search_fields = ('address', 'district')
