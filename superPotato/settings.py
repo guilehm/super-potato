@@ -25,7 +25,7 @@ SECRET_KEY = 'e&b30%n036@mz+=yqowk9_7w(ru(m%u-tbij1whe98#2@hfpv8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'superPotato.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'super-potato/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
