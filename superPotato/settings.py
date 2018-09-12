@@ -125,6 +125,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'core/media')
+
 
 # Heroku configs
 if os.getcwd() == '/app':
@@ -137,7 +140,7 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Header to allow all hosts
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['super-potato.herokuapp.com']
 
     # CONFIG FOR STATICFILES
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
