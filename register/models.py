@@ -24,7 +24,7 @@ class Entity(models.Model):
         return self.name
 
 
-class Covenant(models.Model):
+class HealthPlan(models.Model):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     ABEYANCE = 'abeyance'
