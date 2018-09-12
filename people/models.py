@@ -1,8 +1,41 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.functional import cached_property
 
 
-class Patient(models.Model):
+class People(models.Model):
+    registration = models.CharField(max_length=11, db_index=True)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
+    birth_date = models.DateField(db_index=True)
+    doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
+    home_phone_number = models.CharField(max_length=20, null=True, blank=True)
+    cell_phone_number = models.CharField(max_length=20, null=True, blank=True)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_changed = models.DateTimeField(auto_now=True)
+
+    address = models.ForeignKey(
+        'register.Address',
+        related_name='%(class)s' + 's',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
+    @cached_property
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name
+
+    def __str__(self):
+        return self.first_name
+
+
+class Patient(People):
     HOLDER = 'holder'
     DEPENDENT = 'dependent'
     TYPE_CHOICES = (
@@ -19,13 +52,6 @@ class Patient(models.Model):
         (ABEYANCE, 'Abeyance'),
     )
 
-    registration = models.CharField(max_length=11, db_index=True)
-    name = models.CharField(max_length=40)
-    email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
-    birth_date = models.DateField(db_index=True)
-    doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
-    home_phone_number = models.CharField(max_length=20, null=True, blank=True)
-    cell_phone_number = models.CharField(max_length=20, null=True, blank=True)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES, db_index=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
     holder = models.ForeignKey(
@@ -36,29 +62,6 @@ class Patient(models.Model):
         on_delete=models.SET_NULL
     )
 
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_changed = models.DateTimeField(auto_now=True)
-
     def clean(self):
         if self.type == self.DEPENDENT and not self.holder:
             raise ValidationError('Holder must be selected for dependents.')
-
-    def __str__(self):
-        return self.name
-
-
-class Address(models.Model):
-    patient = models.OneToOneField('people.Patient', related_name='address', on_delete=models.CASCADE)
-    postal_code = models.CharField(max_length=10, db_index=True)
-    address = models.CharField(max_length=50, null=True, blank=True)
-    number = models.CharField(max_length=10, null=True, blank=True)
-    complement = models.CharField(max_length=20, null=True, blank=True)
-    district = models.CharField(max_length=20, null=True, blank=True)
-    city = models.CharField(max_length=30, null=True, blank=True)
-    state = models.CharField(max_length=2, blank=True, null=True)
-
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_changed = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.address
