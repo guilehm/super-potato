@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from register.models import Entity, HealthPlan, Address
+from register.models import Address, Entity, HealthPlan
 
 
 @admin.register(HealthPlan)
