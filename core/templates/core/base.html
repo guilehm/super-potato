@@ -2,14 +2,13 @@
 <!doctype html>
 <html>
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="{% static 'core/js/jquery-3.3.1.slim.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Super Potato!</title>
 </head>
 <body>
@@ -31,6 +30,25 @@
         </div>
     </nav>
 
+    <div class="nav-side-menu">
+        <div class="brand">Super Potato</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                    </a>
+                </li>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a href="#"><i class="fa fa-globe fa-lg"></i> Cadastros <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="service">
+                    <li>Pacientes</li>
+                </ul>
+            </ul>
+     </div>
+    </div>
     {% block content %}
     {% endblock %}
 
