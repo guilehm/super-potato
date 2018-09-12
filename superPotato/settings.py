@@ -56,7 +56,7 @@ ROOT_URLCONF = 'superPotato.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'super-potato/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
