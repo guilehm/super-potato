@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.functional import cached_property
 
 
 class Patient(models.Model):
@@ -20,7 +21,8 @@ class Patient(models.Model):
     )
 
     registration = models.CharField(max_length=11, db_index=True)
-    name = models.CharField(max_length=40)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
     email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
     birth_date = models.DateField(db_index=True)
     doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
@@ -43,8 +45,12 @@ class Patient(models.Model):
         if self.type == self.DEPENDENT and not self.holder:
             raise ValidationError('Holder must be selected for dependents.')
 
+    @cached_property
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name
+
     def __str__(self):
-        return self.name
+        return self.first_name
 
 
 class Address(models.Model):

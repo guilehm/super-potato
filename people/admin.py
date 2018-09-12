@@ -5,11 +5,13 @@ from people.models import Address, Patient
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'birth_date', 'type', 'status')
+    list_display = ('full_name', 'email', 'birth_date', 'type', 'status')
     list_filter = ('status', 'type', 'date_added')
     raw_id_fields = ('holder',)
+    readonly_fields = ('registration',)
     search_fields = (
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'birth_date',
         'home_phone_number',
