@@ -133,13 +133,15 @@ if os.getcwd() == '/app':
         'default': dj_database_url.config(default='postgres://localhost')
     }
 
-    # Honor header 'x-forwarded-proto' para request.is_secure()
+    # Honor header 'x-forwarded-proto' for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Header to allow all hosts
     ALLOWED_HOSTS = ['super-potato.herokuapp.com']
 
-    # CONFIG FOR STATICFILES
+    DEBUG = False
+
+    # Config for staticfiles
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
     STATICFILES_DIRS = (
