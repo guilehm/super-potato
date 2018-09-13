@@ -22,7 +22,7 @@
             <tbody>
                 {% for patient in patients %}
                     <tr>
-                        <th scope="row">{{ patient.registration|default:'' }}</th>
+                        <th scope="row">{{ patient.public_id|default:'' }}</th>
                         <td>{{ patient.full_name|default:'' }}</td>
                         <td>{{ patient.type|default:'' }}</td>
                         <td>{{ patient.status|default:'' }}</td>
