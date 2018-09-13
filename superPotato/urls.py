@@ -16,8 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from superPotato import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls', namespace='core')),
     path('register/', include('register.urls', namespace='register')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
