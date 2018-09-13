@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="container text-center py-5 my-5">
+        <h1 class="display-4">lista de pacientes</h1>
+        <p class="lead mt-3">
+            veja aqui a relação de todos os pacientes
+        </p>
+    </div>
+    <div class="container text-center">
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">paciente</th>
+                    <th scope="col">tipo</th>
+                    <th scope="col">status</th>
+                    <th scope="col">telefone</th>
+                    <th scope="col">usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                    <tr>
+                        <th scope="row">{{ patient.registration|default:'' }}</th>
+                        <td>{{ patient.full_name|default:'' }}</td>
+                        <td>{{ patient.type|default:'' }}</td>
+                        <td>{{ patient.status|default:'' }}</td>
+                        <td>{{ patient.phone_number|default:'' }}</td>
+                        <td>{{ patient.created_by.username|default:'' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

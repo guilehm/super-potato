@@ -12,6 +12,8 @@ class People(models.Model):
     doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
     home_phone_number = models.CharField(max_length=20, null=True, blank=True)
     cell_phone_number = models.CharField(max_length=20, null=True, blank=True)
+    # TODO: created_by
+    # TODO: link to entity
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
@@ -30,6 +32,10 @@ class People(models.Model):
     @cached_property
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    @cached_property
+    def phone_number(self):
+        return self.cell_phone_number or self.home_phone_number
 
     def __str__(self):
         return self.first_name
