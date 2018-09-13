@@ -49,6 +49,11 @@ class HealthPlan(models.Model):
     email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
+    entity = models.ForeignKey(
+        'register.Entity',
+        related_name='health_plans',
+        on_delete=models.CASCADE,
+    )
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
