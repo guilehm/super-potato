@@ -44,7 +44,7 @@ class HealthPlan(models.Model):
         (ABEYANCE, 'Abeyance'),
     )
 
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
     email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
