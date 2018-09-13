@@ -1,10 +1,10 @@
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.functional import cached_property
 
 
 class People(models.Model):
-    registration = models.CharField(max_length=11, db_index=True)
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
@@ -12,8 +12,18 @@ class People(models.Model):
     doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
     home_phone_number = models.CharField(max_length=20, null=True, blank=True)
     cell_phone_number = models.CharField(max_length=20, null=True, blank=True)
-    # TODO: created_by
-    # TODO: link to entity
+    created_by = models.ForeignKey(
+        User,
+        related_name='%(class)s' + 's',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    entity = models.ForeignKey(
+        'register.Entity',
+        related_name='%(class)s' + 's',
+        on_delete=models.CASCADE,
+    )
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
@@ -36,6 +46,13 @@ class People(models.Model):
     @cached_property
     def phone_number(self):
         return self.cell_phone_number or self.home_phone_number
+
+    @cached_property
+    def public_id(self):
+        return '{date}{id:04}'.format(
+            date=self.date_added.strftime('%y%m%d'),
+            id=self.id,
+        )
 
     def __str__(self):
         return self.first_name
@@ -71,3 +88,21 @@ class Patient(People):
     def clean(self):
         if self.type == self.DEPENDENT and not self.holder:
             raise ValidationError('Holder must be selected for dependents.')
+
+
+class Professional(People):
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    ON_HOLD = 'on_hold'
+    STATUS_CHOICES = (
+        (ACTIVE, 'Active'),
+        (INACTIVE, 'Inactive'),
+        (ON_HOLD, 'On hold'),
+    )
+    registration_number = models.CharField(max_length=20, unique=True, db_index=True)
+    service_phone_number = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
+
+    @cached_property
+    def phone_number(self):
+        return self.service_phone_number or self.cell_phone_number or self.home_phone_number
