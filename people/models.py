@@ -5,6 +5,11 @@ from django.utils.functional import cached_property
 
 
 class People(models.Model):
+    entity = models.ForeignKey(
+        'register.Entity',
+        related_name='%(class)s' + 's',
+        on_delete=models.CASCADE,
+    )
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
@@ -12,22 +17,14 @@ class People(models.Model):
     doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
     home_phone_number = models.CharField(max_length=20, null=True, blank=True)
     cell_phone_number = models.CharField(max_length=20, null=True, blank=True)
-    created_by = models.ForeignKey(
+    added_by = models.ForeignKey(
         User,
-        related_name='%(class)s' + 's',
+        related_name='created_%(class)s' + 's',
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        editable=False
     )
-    entity = models.ForeignKey(
-        'register.Entity',
-        related_name='%(class)s' + 's',
-        on_delete=models.CASCADE,
-    )
-
-    date_added = models.DateTimeField(auto_now_add=True)
-    date_changed = models.DateTimeField(auto_now=True)
-
     address = models.ForeignKey(
         'register.Address',
         related_name='%(class)s' + 's',
@@ -35,6 +32,9 @@ class People(models.Model):
         null=True,
         blank=True
     )
+
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_changed = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -99,9 +99,15 @@ class Professional(People):
         (INACTIVE, 'Inactive'),
         (ON_HOLD, 'On hold'),
     )
+    transfer_value = models.DecimalField(max_digits=8, decimal_places=2)
     registration_number = models.CharField(max_length=20, unique=True, db_index=True)
     service_phone_number = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
+
+    procedures = models.ManyToManyField(
+        'attendance.Procedure',
+        related_name='professionals',
+    )
 
     @cached_property
     def phone_number(self):
