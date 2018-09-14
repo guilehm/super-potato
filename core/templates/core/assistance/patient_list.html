@@ -8,29 +8,35 @@
         </p>
     </div>
     <div class="container text-center">
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">paciente</th>
-                    <th scope="col">tipo</th>
-                    <th scope="col">status</th>
-                    <th scope="col">telefone</th>
-                    <th scope="col">usuário</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for patient in patients %}
+        {% if patients %}
+            <table class="table table-sm table-hover">
+                <thead>
                     <tr>
-                        <th scope="row">{{ patient.public_id|default:'' }}</th>
-                        <td>{{ patient.full_name|default:'' }}</td>
-                        <td>{{ patient.type|default:'' }}</td>
-                        <td>{{ patient.status|default:'' }}</td>
-                        <td>{{ patient.phone_number|default:'' }}</td>
-                        <td>{{ patient.created_by.username|default:'' }}</td>
+                        <th scope="col">#</th>
+                        <th scope="col">paciente</th>
+                        <th scope="col">tipo</th>
+                        <th scope="col">status</th>
+                        <th scope="col">telefone</th>
+                        <th scope="col">usuário</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                        <tr>
+                            <th scope="row">{{ patient.public_id|default:'' }}</th>
+                            <td>{{ patient.full_name|default:'' }}</td>
+                            <td>{{ patient.type|default:'' }}</td>
+                            <td>{{ patient.status|default:'' }}</td>
+                            <td>{{ patient.phone_number|default:'' }}</td>
+                            <td>{{ patient.created_by.username|default:'' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> Nenhum <a class="alert-link">paciente</a> cadastrado.
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
