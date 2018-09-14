@@ -28,7 +28,7 @@
                             <td>{{ patient.type|default:'' }}</td>
                             <td>{{ patient.status|default:'' }}</td>
                             <td>{{ patient.phone_number|default:'' }}</td>
-                            <td>{{ patient.created_by.username|default:'' }}</td>
+                            <td>{{ patient.added_by.username|default:'' }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

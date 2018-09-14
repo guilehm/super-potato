@@ -1,4 +1,14 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+
+class User(AbstractUser):
+    entity = models.ForeignKey(
+        'register.Entity',
+        related_name='users',
+        on_delete=models.CASCADE,
+        null=True,
+    )
 
 
 class Entity(models.Model):
@@ -29,6 +39,9 @@ class Entity(models.Model):
 
     class Meta:
         verbose_name_plural = 'Entities'
+        permissions = (
+            ('manage', 'Can manage entities'),
+        )
 
     def __str__(self):
         return self.name

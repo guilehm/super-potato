@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -17,7 +17,7 @@ class Service(models.Model):
         editable=False,
     )
     added_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name='created_services',
         on_delete=models.SET_NULL,
         null=True,
