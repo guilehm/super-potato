@@ -44,19 +44,22 @@ class HealthPlan(models.Model):
         (ABEYANCE, 'Abeyance'),
     )
 
-    name = models.CharField(max_length=100)
-    doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
-    email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
-    phone_number = models.CharField(max_length=20, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
     entity = models.ForeignKey(
         'register.Entity',
         related_name='health_plans',
         on_delete=models.CASCADE,
     )
+    name = models.CharField(max_length=100)
+    doc = models.CharField(max_length=20, null=True, blank=True, db_index=True)
+    email = models.EmailField(max_length=200, null=True, blank=True, db_index=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Address(models.Model):
