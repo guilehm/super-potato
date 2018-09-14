@@ -7,8 +7,6 @@ from register.models import Address, Entity, HealthPlan, User
 
 @admin.register(User)
 class UserAdmin(DjangoUserAdmin):
-    """Define admin model for custom User model with no email field."""
-
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'entity')}),
@@ -22,9 +20,10 @@ class UserAdmin(DjangoUserAdmin):
             'fields': ('username', 'password1', 'password2'),
         }),
     )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('username', 'entity', 'first_name', 'last_name', 'is_staff')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
+    list_filter = ('entity', 'is_staff', 'is_superuser', 'is_active')
 
 
 @admin.register(HealthPlan)
