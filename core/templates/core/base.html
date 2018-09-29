@@ -24,14 +24,16 @@
         </button>
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="dropdown ml-auto mt-2 mt-lg-0">
-                    <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                        <strong>atendimento</strong>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{% url 'core:patient-list' %}">lista de pacientes</a>
+                    <div class="dropdown ml-auto mt-2 mt-lg-0">
+                        {% if user.is_authenticated %}
+                            <a class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                                <strong>atendimento</strong>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{% url 'core:patient-list' %}">lista de pacientes</a>
+                            </div>
+                        {% endif %}
                     </div>
-                </div>
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-link">
