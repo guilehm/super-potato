@@ -12,7 +12,7 @@ dj-database-url = "*"
 dj-static = "*"
 "static3" = "*"
 gunicorn = "*"
-"psycopg2" = "*"
+psycopg2-binary = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
 
